@@ -15,6 +15,7 @@
         <div class="col s6">
           <div class="content">
             <img
+              v-on:click="gotoapp(nftdata[2 * n + 0])"
               :src="nftdata[2 * n + 0] ? nftdata[2 * n + 0].image : ''"
               alt=""
             />
@@ -36,6 +37,7 @@
         <div class="col s6">
           <div class="content">
             <img
+              v-on:click="gotoapp(nftdata[2 * n + 1])"
               :src="nftdata[2 * n + 1] ? nftdata[2 * n + 1].image : ''"
               alt=""
             />
@@ -59,6 +61,18 @@
   </div>
   <!-- end product -->
 </template>
+
+<script setup>
+function gotoapp(data) {
+  if (data) {
+    let imageurl = data.image;
+    imageurl = encodeURIComponent(imageurl);
+    const url = "uniwebview://showcase?imageurl=" + imageurl;
+    console.log(url);
+    window.location.href = url;
+  }
+}
+</script>
 
 <script>
 import axios from "axios";
