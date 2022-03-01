@@ -1,3 +1,5 @@
+<!-- https://codepen.io/shieldsma91/pen/zLpbLX -->
+
 <template>
   <div>
     <!-- navbar top -->
@@ -73,7 +75,8 @@ import { ref } from "vue";
 if (typeof window.ethereum !== "undefined") {
   console.log("MetaMask is installed!");
 } else {
-  alert("pleaes install metamask");
+  // alert("pleaes install metamask");
+  console.log("no meta mask");
 }
 
 const walletid = ref("Please Login");
