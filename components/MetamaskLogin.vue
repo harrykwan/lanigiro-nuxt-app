@@ -43,7 +43,7 @@ import axios from "axios";
 
 const nowuser = useFirebaseAuth();
 const walletid = useWallet();
-const metamaskbrowser = ref(true);
+const metamaskbrowser = ref(false);
 const deeplink = computed(
   () =>
     "https://metamask.app.link/dapp/lanigiro.netlify.app/metamaskmobile?userid=" +
@@ -51,7 +51,6 @@ const deeplink = computed(
 );
 
 onMounted(() => {
-  console.log(deeplink.value);
   if (typeof window.ethereum !== "undefined") {
     console.log("MetaMask is installed!");
     metamaskbrowser.value = true;
