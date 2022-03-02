@@ -20,7 +20,7 @@
                 >Connect
               </a>
               <a
-                :href="deeplink"
+                href="https://metamask.app.link/dapp/lanigiro.netlify.app"
                 class="button-default"
                 v-on:click="signinmetamask()"
                 v-if="!metamaskbrowser"
@@ -41,16 +41,14 @@
 import { ref } from "vue";
 import axios from "axios";
 
-const nowuser = useFirebaseAuth();
+const route = useRoute();
+const userid = ref(route.query.userid ? route.query.userid : "");
+// const nowuser = useFirebaseAuth();
 const walletid = useWallet();
 const metamaskbrowser = ref(true);
-const deeplink = ref(
-  "https://metamask.app.link/dapp/lanigiro.netlify.app/metamaskmobile?userid=" +
-    nowuser.value.uid
-);
 
 onMounted(() => {
-  console.log(deeplink.value);
+  console.log(userid.value);
   if (typeof window.ethereum !== "undefined") {
     console.log("MetaMask is installed!");
     metamaskbrowser.value = true;
@@ -78,7 +76,7 @@ async function savemetamask() {
   return new Promise((resolve, reject) => {
     axios
       .post("https://wyqx4s5dw8.execute-api.us-east-1.amazonaws.com/users", {
-        userId: nowuser.value.uid,
+        userId: userid.value,
         metamaskId: walletid.value,
       })
       .then(function (response) {
