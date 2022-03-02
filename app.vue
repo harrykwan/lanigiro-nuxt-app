@@ -50,10 +50,11 @@
     <NuxtLayout></NuxtLayout>
 
     <Script src="js/jquery.min.js"></Script>
-    <Script src="js/materialize.min.js"></Script>
-    <Script src="js/owl.carousel.min.js"></Script>
-    <Script src="js/fakeLoader.min.js"></Script>
-    <Script src="js/main.js" defer></Script>
+    <!-- <Script src="js/fakeLoader.min.js"></Script> -->
+    <!-- <Script src="js/materialize.min.js" defer></Script> -->
+    <!-- <Script src="js/owl.carousel.min.js" defer></Script> -->
+
+    <!-- <Script src="js/main.js" defer></Script> -->
   </div>
 </template>
 
@@ -75,7 +76,6 @@ const firebaseConfig = {
   appId: "1:1088966942325:web:a6ec92c5205f304af9223c",
   measurementId: "G-30NXYC5E3G",
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 

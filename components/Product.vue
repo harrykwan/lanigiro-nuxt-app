@@ -6,6 +6,7 @@
         <h4>Your NFTs</h4>
         <p></p>
       </div>
+
       <div
         class="row"
         v-for="n in nftdata.length"
@@ -40,31 +41,43 @@
 </template>
 
 <script setup>
-function gotoapp(data) {
-  if (data) {
-    let imageurl = data.image;
-    imageurl = encodeURIComponent(imageurl);
-    const url = "uniwebview://showcase?imageurl=" + imageurl;
-    console.log(url);
-    window.location.href = url;
-  }
-}
-</script>
-
-<script>
 import axios from "axios";
+const nowuser = useFirebaseAuth();
+const nftdata = ref([]);
 
-export default {
-  data: function () {
-    return {
-      nftdata: [],
-    };
-  },
-  created: function () {
-    var globalnftdata = this.nftdata;
+watch(nowuser, async () => {
+  console.log(nowuser.value);
+  if (nowuser.value) {
+    const linkedwalletid = await getwalletid();
+    await getnftdata(linkedwalletid);
+  }
+});
+
+async function getwalletid() {
+  return new Promise((resolve, reject) => {
     axios
       .get(
-        "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/gettestnetnfts/0x3E1D44802321cce6E9E7557730433c2ab5838760"
+        "https://wyqx4s5dw8.execute-api.us-east-1.amazonaws.com/users/" +
+          nowuser.value.uid //0x3E1D44802321cce6E9E7557730433c2ab5838760
+      )
+      .then(function (response) {
+        console.log(response.data.metamaskId);
+        resolve(response.data.metamaskId);
+      })
+      .catch(function (error) {
+        console.log(error);
+        resolve(error);
+      });
+  });
+}
+
+async function getnftdata(mywalletid) {
+  return new Promise((resolve, reject) => {
+    const globalnftdata = nftdata.value;
+    axios
+      .get(
+        "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/gettestnetnfts/" +
+          mywalletid //0x3E1D44802321cce6E9E7557730433c2ab5838760
       )
       // .get(
       //   "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/0x42c87fc41a23684fe07264b57a123f1954857cd2"
@@ -86,12 +99,24 @@ export default {
           }
         }
         console.log(globalnftdata);
+        resolve(globalnftdata);
         // this.nftdata = response.data;
       })
       .catch(function (error) {
         // handle error
         console.log(error);
+        resolve(error);
       });
-  },
-};
+  });
+}
+
+function gotoapp(data) {
+  if (data) {
+    let imageurl = data.image;
+    imageurl = encodeURIComponent(imageurl);
+    const url = "uniwebview://showcase?imageurl=" + imageurl;
+    console.log(url);
+    window.location.href = url;
+  }
+}
 </script>

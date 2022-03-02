@@ -1,8 +1,9 @@
 <template>
   <div>
     <NavBar />
-    <Product />
+
+    <MetamaskLogin />
+
     <Footer />
   </div>
 </template>
-<script setup></script>

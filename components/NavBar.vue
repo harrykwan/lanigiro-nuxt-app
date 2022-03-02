@@ -5,7 +5,7 @@
     <!-- navbar top -->
     <div class="navbar-top">
       <div class="side-nav-panel-left">
-        <a href="#" data-activates="slide-out-left" class="side-nav-left"
+        <a href="#" v-on:click="openNav()" class="side-nav-left"
           ><i class="fa fa-bars"></i
         ></a>
       </div>
@@ -15,7 +15,7 @@
       </div>
       <!-- end site brand	 -->
       <div class="side-nav-panel-right">
-        <i v-on:click="signinmetamask()" class="fas fa-sign-in-alt"></i>
+        <i v-on:click="signout()" class="fas fa-sign-in-alt"></i>
 
         <!-- <a href="cart.html" class="side-nav-right"
         ><i class="fa fa-shopping-basket"></i><span>2</span></a
@@ -24,6 +24,19 @@
     </div>
     <!-- end navbar top -->
 
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" v-on:click="closeNav()"
+        >×</a
+      >
+      <a href="/">Home</a>
+
+      <a href="/metamask">MetaMask</a>
+
+      <a href="/login">Login</a>
+      <a href="/createaccount">Sign Up</a>
+
+      <a href="#">Contact Us</a>
+    </div>
     <!-- side nav left-->
     <div class="side-nav-panel-left">
       <ul id="slide-out-left" class="side-nav side-nav-panel collapsible">
@@ -55,9 +68,7 @@
         <li>
           <a href=""><i class="fa fa-user"></i>About Us</a>
         </li>
-        <li>
-          <a href=""><i class="fa fa-envelope-o"></i>Contact Us</a>
-        </li>
+
         <!-- <li>
         <a href="login.html"><i class="fa fa-sign-in"></i>Login</a>
       </li>
@@ -72,27 +83,107 @@
 
 <script setup>
 import { ref } from "vue";
-if (typeof window.ethereum !== "undefined") {
-  console.log("MetaMask is installed!");
-} else {
-  // alert("pleaes install metamask");
-  console.log("no meta mask");
-}
-
+import { getAuth, signOut } from "firebase/auth";
 const walletid = ref("Please Login");
+const navopen = ref(false);
 // let walletid = useWallet();
 
-async function signinmetamask() {
-  console.log("login");
-  const accounts = await ethereum.request({
-    method: "eth_requestAccounts",
-  });
-  const account = accounts[0];
+function signout() {
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      // An error happened.
+    });
+}
 
-  this.walletid = account;
+function openNav() {
+  if (navopen.value) {
+    closeNav();
+    return;
+  } else {
+    document.getElementById("mySidebar").style.width = "250px";
+    // document.getElementById("main").style.marginLeft = "250px";
+    navopen.value = true;
+    return;
+  }
+}
 
-  console.log(this.walletid);
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  // document.getElementById("main").style.marginLeft = "0";
+  navopen.value = false;
+  return;
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  /* background-color: #111; */
+  background-color: rgba(255, 255, 255, 0.8);
+
+  opacity: 0.8;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 100px;
+  backdrop-filter: blur(200px);
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  /* color: #d3d0d0; */
+  display: block;
+  transition: 0.3s;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left 0.5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {
+    padding-top: 15px;
+  }
+  .sidebar a {
+    font-size: 18px;
+  }
+}
+</style>
