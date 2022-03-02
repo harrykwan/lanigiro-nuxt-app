@@ -44,8 +44,9 @@ import axios from "axios";
 const nowuser = useFirebaseAuth();
 const walletid = useWallet();
 const metamaskbrowser = ref(true);
-const deeplink = ref(
-  "https://metamask.app.link/dapp/lanigiro.netlify.app/metamaskmobile?userid=" +
+const deeplink = computed(
+  () =>
+    "https://metamask.app.link/dapp/lanigiro.netlify.app/metamaskmobile?userid=" +
     nowuser.value.uid
 );
 
