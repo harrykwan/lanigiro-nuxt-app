@@ -12,9 +12,20 @@
             </div>
 
             <div class="center" v-if="!walletid">
-              <a href="#" class="button-default" v-on:click="signinmetamask()"
-                >Connect</a
-              >
+              <a
+                href="#"
+                class="button-default"
+                v-on:click="signinmetamask()"
+                v-if="metamaskbrowser"
+                >Connect
+              </a>
+              <a
+                href="https://metamask.app.link/dapp/lanigiro.netlify.app"
+                class="button-default"
+                v-on:click="signinmetamask()"
+                v-if="!metamaskbrowser"
+                >Connect Mobile
+              </a>
             </div>
             <div class="center" v-if="walletid">
               {{ walletid }}
@@ -32,14 +43,20 @@ import axios from "axios";
 
 const nowuser = useFirebaseAuth();
 const walletid = useWallet();
+const metamaskbrowser = ref(true);
+
+onMounted(() => {
+  if (typeof window.ethereum !== "undefined") {
+    console.log("MetaMask is installed!");
+    metamaskbrowser.value = true;
+  } else {
+    // alert("pleaes install metamask");
+    console.log("no meta mask");
+    metamaskbrowser.value = false;
+  }
+});
 
 async function signinmetamask() {
-  // if (typeof window.ethereum !== "undefined") {
-  //   console.log("MetaMask is installed!");
-  // } else {
-  //   // alert("pleaes install metamask");
-  //   console.log("no meta mask");
-  // }
   const accounts = await ethereum.request({
     method: "eth_requestAccounts",
   });
