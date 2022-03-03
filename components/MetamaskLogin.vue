@@ -40,6 +40,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+const router = useRouter();
 
 const nowuser = useFirebaseAuth();
 const walletid = useWallet();
@@ -84,6 +85,7 @@ async function savemetamask() {
       .then(function (response) {
         console.log(response);
         resolve(response);
+        router.push("/");
       })
       .catch(function (error) {
         console.log(error);

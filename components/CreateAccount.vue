@@ -36,6 +36,9 @@
                   v-model="password"
                 />
               </div>
+              <div class="mt-2 mb-3" style="color: red">
+                {{ showerror }}
+              </div>
               <div v-on:click="signup()" class="button-default">Register</div>
             </form>
           </div>
@@ -57,6 +60,8 @@ import {
 const name = ref("");
 const email = ref("");
 const password = ref("");
+const showerror = ref("");
+const router = useRouter();
 
 function signup() {
   const auth = getAuth();
@@ -70,7 +75,8 @@ function signup() {
           // Profile updated!
           // ...
           console.log("done");
-          window.location.href = "/";
+          //   window.location.href = "/";
+          router.push("/metamask");
         })
         .catch((error) => {
           // An error occurred
@@ -82,6 +88,7 @@ function signup() {
       const errorCode = error.code;
       const errorMessage = error.message;
       // ..
+      showerror.value = error.message.split("/")[1].split(")")[0];
       console.log(error);
     });
 }

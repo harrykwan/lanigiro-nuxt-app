@@ -26,7 +26,7 @@
               />
             </div>
 
-            <a href=""><h6>Create new Account</h6></a>
+            <NuxtLink to="/createaccount"><h6>Create new Account</h6></NuxtLink>
             <a href="#" class="button-default" v-on:click="login()">Login</a>
           </form>
         </div>
@@ -38,6 +38,7 @@
 <script setup>
 import { ref } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+const router = useRouter();
 
 const email = ref("");
 const password = ref("");
@@ -49,7 +50,8 @@ function login() {
       // Signed in
       const user = userCredential.user;
       console.log(user);
-      window.location.href = "/";
+      // window.location.href = "/";
+      router.push("/");
       // ...
     })
     .catch((error) => {

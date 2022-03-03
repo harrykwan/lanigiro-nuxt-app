@@ -46,12 +46,20 @@ const nowuser = useFirebaseAuth();
 const nftdata = ref([]);
 
 watch(nowuser, async () => {
+  await startpage();
+});
+
+onMounted(async () => {
+  await startpage();
+});
+
+async function startpage() {
   console.log(nowuser.value);
   if (nowuser.value) {
     const linkedwalletid = await getwalletid();
     await getnftdata(linkedwalletid);
   }
-});
+}
 
 async function getwalletid() {
   return new Promise((resolve, reject) => {

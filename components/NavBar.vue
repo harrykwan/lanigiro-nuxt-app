@@ -11,7 +11,7 @@
       </div>
       <!-- site brand	 -->
       <div class="site-brand">
-        <a href="#"><h1>LANIGIRO</h1></a>
+        <a href="/"><h1>LANIGIRO</h1></a>
       </div>
       <!-- end site brand	 -->
       <div class="side-nav-panel-right">
@@ -28,14 +28,14 @@
       <a href="javascript:void(0)" class="closebtn" v-on:click="closeNav()"
         >×</a
       >
-      <a href="/">Home</a>
+      <NuxtLink to="/"><a href="/">Home</a></NuxtLink>
 
-      <a href="/metamask">MetaMask</a>
+      <NuxtLink to="/metamask"><a href="#">MetaMask</a></NuxtLink>
 
-      <a href="/login">Login</a>
-      <a href="/createaccount">Sign Up</a>
+      <NuxtLink to="/login"><a href="#">Login</a></NuxtLink>
+      <NuxtLink to="/createaccount"><a href="#">Sign Up</a></NuxtLink>
 
-      <a href="#">Contact Us</a>
+      <!-- <a href="#">Contact Us</a> -->
     </div>
     <!-- side nav left-->
     <div class="side-nav-panel-left">
