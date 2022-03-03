@@ -28,7 +28,24 @@
               </a>
             </div>
             <div class="center" v-if="walletid">
-              {{ walletid }}
+              <a
+                href="#"
+                class="button-default"
+                v-on:click="signinmetamask()"
+                v-if="metamaskbrowser"
+                >Connect Again
+              </a>
+              <a
+                :href="deeplink"
+                class="button-default"
+                v-on:click="signinmetamask()"
+                v-if="!metamaskbrowser"
+                >Connect Mobile Again
+              </a>
+              <div class="mt-5">
+                {{ walletid.substring(0, walletid.length / 2) }}<br />
+                {{ walletid.substring(walletid.length / 2) }}
+              </div>
             </div>
           </div>
         </div>

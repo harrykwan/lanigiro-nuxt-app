@@ -7,6 +7,10 @@
         <p></p>
       </div>
 
+      <!-- <div class="section-head">
+        <p>{{ walletid }}</p>
+      </div> -->
+
       <div
         class="row"
         v-for="n in nftdata.length"
@@ -44,6 +48,7 @@
 import axios from "axios";
 const nowuser = useFirebaseAuth();
 const nftdata = ref([]);
+const walletid = useWallet();
 
 watch(nowuser, async () => {
   await startpage();
@@ -57,6 +62,7 @@ async function startpage() {
   console.log(nowuser.value);
   if (nowuser.value) {
     const linkedwalletid = await getwalletid();
+    walletid.value = linkedwalletid;
     await getnftdata(linkedwalletid);
   }
 }

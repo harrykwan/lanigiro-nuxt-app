@@ -28,12 +28,24 @@
       <a href="javascript:void(0)" class="closebtn" v-on:click="closeNav()"
         >×</a
       >
+      <div class="ml-5">
+        <h3>{{ displayname }}</h3>
+        <p style="opacity: 0.3">
+          {{ walletid.substring(0, walletid.length / 2) }}<br />
+          {{ walletid.substring(walletid.length / 2) }}
+        </p>
+      </div>
+
       <NuxtLink to="/"><a href="/">Home</a></NuxtLink>
 
-      <NuxtLink to="/metamask"><a href="#">MetaMask</a></NuxtLink>
+      <NuxtLink v-if="nowuser" to="/metamask"
+        ><a href="#">MetaMask</a></NuxtLink
+      >
 
-      <NuxtLink to="/login"><a href="#">Login</a></NuxtLink>
-      <NuxtLink to="/createaccount"><a href="#">Sign Up</a></NuxtLink>
+      <NuxtLink v-if="!nowuser" to="/login"><a href="#">Login</a></NuxtLink>
+      <NuxtLink v-if="!nowuser" to="/createaccount"
+        ><a href="#">Sign Up</a></NuxtLink
+      >
 
       <!-- <a href="#">Contact Us</a> -->
     </div>
@@ -45,9 +57,6 @@
         <h2>John Doe</h2>
         <h6>Mobile Developer</h6> -->
           <h2>Wallet</h2>
-
-          <h6>{{ walletid.substring(0, walletid.length / 2) }}</h6>
-          <h6>{{ walletid.substring(walletid.length / 2) }}</h6>
         </li>
         <li class="li-top">
           <a href=""><i class="fa fa-home"></i>Home</a>
@@ -84,15 +93,28 @@
 <script setup>
 import { ref } from "vue";
 import { getAuth, signOut } from "firebase/auth";
-const walletid = ref("Please Login");
+// const walletid = ref("Please Login");
+
 const navopen = ref(false);
-// let walletid = useWallet();
+const walletid = useWallet();
+const router = useRouter();
+const nowuser = useFirebaseAuth();
+const displayname = computed(() => {
+  // return "Please Login";
+  if (nowuser.value) {
+    return "Welcome " + nowuser.value.displayName;
+  } else {
+    return "Please Login";
+  }
+});
 
 function signout() {
   const auth = getAuth();
   signOut(auth)
     .then(() => {
       // Sign-out successful.
+      walletid.value = "";
+      router.push("/login");
     })
     .catch((error) => {
       // An error happened.
