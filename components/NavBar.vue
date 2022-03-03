@@ -36,7 +36,7 @@
         </p>
       </div>
 
-      <NuxtLink to="/"><a href="/">Home</a></NuxtLink>
+      <NuxtLink v-if="nowuser" to="/"><a href="/">Home</a></NuxtLink>
 
       <NuxtLink v-if="nowuser" to="/metamask"
         ><a href="#">MetaMask</a></NuxtLink
@@ -48,43 +48,6 @@
       >
 
       <!-- <a href="#">Contact Us</a> -->
-    </div>
-    <!-- side nav left-->
-    <div class="side-nav-panel-left">
-      <ul id="slide-out-left" class="side-nav side-nav-panel collapsible">
-        <li class="profil">
-          <!-- <img src="img/profile.jpg" alt="" />
-        <h2>John Doe</h2>
-        <h6>Mobile Developer</h6> -->
-          <h2>Wallet</h2>
-        </li>
-        <li class="li-top">
-          <a href=""><i class="fa fa-home"></i>Home</a>
-        </li>
-        <li>
-          <a href=""><i class="fa fa-shopping-basket"></i>Product List</a>
-        </li>
-        <li>
-          <a href=""><i class="fa fa-shopping-cart"></i>Shopping Cart</a>
-        </li>
-        <li>
-          <a href=""><i class="fa fa-send"></i>Checkout</a>
-        </li>
-        <li>
-          <a href=""><i class="fa fa-bold"></i>Blog</a>
-        </li>
-
-        <li>
-          <a href=""><i class="fa fa-user"></i>About Us</a>
-        </li>
-
-        <!-- <li>
-        <a href="login.html"><i class="fa fa-sign-in"></i>Login</a>
-      </li>
-      <li>
-        <a href="register.html"><i class="fa fa-user-plus"></i>Register</a>
-      </li> -->
-      </ul>
     </div>
   </div>
   <!-- end side nav left-->
