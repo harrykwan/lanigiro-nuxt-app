@@ -11,13 +11,13 @@
         <p>{{ walletid }}</p>
       </div> -->
 
-      <div
-        class="row"
-        v-for="n in nftdata.length"
-        :key="n"
-        style="padding-bottom: 50px"
-      >
-        <div class="col-12">
+      <div class="row" style="padding-bottom: 50px">
+        <div
+          class="col-6"
+          style="padding-bottom: 50px"
+          v-for="n in nftdata.length"
+          :key="n"
+        >
           <div class="content">
             <!-- {{ n }}: {{ nftdata[n - 1] }} -->
             <img
@@ -58,12 +58,55 @@ onMounted(async () => {
   await startpage();
 });
 
+async function getgeodata() {
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        resolve(position.coords);
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  });
+}
+
+async function sendgeodata(socket, mywalletid, mygeodata) {
+  socket.emit("updatelocation", {
+    walletid: mywalletid,
+    geo: {
+      lat: mygeodata.latitude,
+      long: mygeodata.longitude,
+    },
+  });
+}
+
+function geodistance(lon1, lat1, lon2, lat2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = (lat2 - lat1).toRad(); // Javascript functions in radians
+  var dLon = (lon2 - lon1).toRad();
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1.toRad()) *
+      Math.cos(lat2.toRad()) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c; // Distance in km
+  return d;
+}
+
 async function startpage() {
   console.log(nowuser.value);
   if (nowuser.value) {
+    const socket = io("http://13.229.79.196/");
+    socket.on("updatelocation", (msg) => {
+      console.log(msg);
+    });
     const linkedwalletid = await getwalletid();
     walletid.value = linkedwalletid;
     await getnftdata(linkedwalletid);
+    const mygeodata = await getgeodata();
+    await sendgeodata(socket, walletid.value, mygeodata);
   }
 }
 

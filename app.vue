@@ -46,6 +46,7 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"
     ></Script>
+    <Script src="http://13.229.79.196/socket.io/socket.io.js"></Script>
 
     <NuxtLayout></NuxtLayout>
 
@@ -88,6 +89,7 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     const uid = user.uid;
+
     // ...
     console.log(uid);
   } else {
