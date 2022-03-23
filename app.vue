@@ -46,7 +46,11 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"
     ></Script>
-    <Script src="http://13.229.79.196/socket.io/socket.io.js"></Script>
+    <Script
+      src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+      integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+      crossorigin="anonymous"
+    ></Script>
 
     <NuxtLayout></NuxtLayout>
 
