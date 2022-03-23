@@ -11,6 +11,8 @@
         <p>{{ walletid }}</p>
       </div> -->
 
+      <div>{{ geodata }}</div>
+
       <div class="row" style="padding-bottom: 50px">
         <div
           class="col-6"
@@ -49,6 +51,7 @@ import axios from "axios";
 const nowuser = useFirebaseAuth();
 const nftdata = ref([]);
 const walletid = useWallet();
+const geodata = ref({});
 
 watch(nowuser, async () => {
   await startpage();
@@ -73,10 +76,7 @@ async function getgeodata() {
 async function sendgeodata(socket, mywalletid, mygeodata) {
   socket.emit("updatelocation", {
     walletid: mywalletid,
-    geo: {
-      lat: mygeodata.latitude,
-      long: mygeodata.longitude,
-    },
+    geo: mygeodata,
   });
 }
 
@@ -106,7 +106,11 @@ async function startpage() {
     walletid.value = linkedwalletid;
     await getnftdata(linkedwalletid);
     const mygeodata = await getgeodata();
-    await sendgeodata(socket, walletid.value, mygeodata);
+    geodata.value = {
+      lat: mygeodata.latitude,
+      long: mygeodata.longitude,
+    };
+    await sendgeodata(socket, walletid.value, geodata.value);
   }
 }
 
