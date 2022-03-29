@@ -2,6 +2,7 @@
 
 <template>
   <div>
+    <div class="topcover"></div>
     <!-- navbar top -->
     <div class="navbar-top">
       <div class="side-nav-panel-left">
@@ -108,6 +109,15 @@ function closeNav() {
 .navbar-top {
   background: #041322;
   color: white !important;
+}
+
+.topcover {
+  background: #041322;
+  width: 100%;
+  height: 500px;
+  position: fixed;
+  top: -500px;
+  z-index: 999;
 }
 
 h1,
