@@ -106,3 +106,31 @@ onAuthStateChanged(auth, (user) => {
 
 // console.log(app);
 </script>
+
+<style>
+body,
+html {
+  background: #041322;
+  height: 100vh;
+  color: white;
+}
+input {
+  background: #041322 !important;
+  border: 0px solid black !important;
+  border-radius: 10px !important;
+}
+
+.button-default {
+  background: linear-gradient(
+    to bottom right,
+    #e186eb,
+    #0b2d50,
+    #061e36,
+    #39bfef
+  ) !important;
+  padding: 5px 18px;
+  border: 0px solid black;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  border-radius: 10px;
+}
+</style>

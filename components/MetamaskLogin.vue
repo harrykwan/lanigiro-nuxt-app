@@ -42,7 +42,7 @@
                 v-if="!metamaskbrowser"
                 >Connect Mobile Again
               </a>
-              <div class="mt-5">
+              <div class="mt-5" style="opacity: 0.3">
                 {{ walletid.substring(0, walletid.length / 2) }}<br />
                 {{ walletid.substring(walletid.length / 2) }}
               </div>
@@ -111,3 +111,10 @@ async function savemetamask() {
   });
 }
 </script>
+<style scoped>
+.pages {
+  background: #061e36;
+  color: #fff;
+  background-image: linear-gradient(to bottom right, #0b2d50, #061e36, #041322);
+}
+</style>

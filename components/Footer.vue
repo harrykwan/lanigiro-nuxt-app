@@ -26,3 +26,10 @@
     <!-- end footer -->
   </div>
 </template>
+
+<style scoped>
+.footer {
+  background: #041322;
+  color: white;
+}
+</style>

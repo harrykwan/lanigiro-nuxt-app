@@ -1,8 +1,8 @@
 <template>
   <!-- product -->
-  <div class="section product">
+  <div class="section product" style="height: 100%">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head" style="padding-bottom: 30px">
         <h4>Your NFTs</h4>
         <p></p>
       </div>
@@ -11,7 +11,7 @@
         <p>{{ walletid }}</p>
       </div> -->
 
-      <div>{{ geodata }}</div>
+      <!-- <div style="opacity: 0.5">{{ geodata }}</div> -->
 
       <div class="row" style="padding-bottom: 50px">
         <div
@@ -20,15 +20,26 @@
           v-for="n in nftdata.length"
           :key="n"
         >
-          <div class="content">
+          <div class="content nftitem">
             <!-- {{ n }}: {{ nftdata[n - 1] }} -->
-            <img
-              v-on:click="gotoapp(nftdata[n - 1])"
-              :src="nftdata[n - 1] ? nftdata[n - 1].image : ''"
-              alt=""
-            />
-            <h5>
-              <a href="">{{ nftdata[n - 1] ? nftdata[n - 1].name : "" }}</a>
+            <div>
+              <img
+                style="
+                  width: 35vw;
+                  height: 35vw;
+                  object-fit: cover;
+                  border: 0px solid black;
+                  border-radius: 10px;
+                "
+                v-on:click="gotoapp(nftdata[n - 1])"
+                :src="nftdata[n - 1] ? nftdata[n - 1].image : ''"
+                alt=""
+              />
+            </div>
+            <h5 style="opacity: 0.8; margin-top: 15px">
+              <a class="text-light" href="">{{
+                nftdata[n - 1] ? nftdata[n - 1].name : ""
+              }}</a>
             </h5>
             <!-- <div class="star">
               <span class="active"><i class="fa fa-star"></i></span>
@@ -45,6 +56,22 @@
   </div>
   <!-- end product -->
 </template>
+
+<style scoped>
+.product {
+  background: #061e36;
+  color: #fff;
+  background-image: linear-gradient(to bottom right, #0b2d50, #061e36, #041322);
+}
+
+.nftitem {
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  padding: 15px;
+  background: #0b2d50;
+  border: 0px solid black;
+  border-radius: 15px;
+}
+</style>
 
 <script setup>
 import axios from "axios";
@@ -98,7 +125,7 @@ function geodistance(lon1, lat1, lon2, lat2) {
 async function startpage() {
   console.log(nowuser.value);
   if (nowuser.value) {
-    const socket = io("http://13.229.79.196/");
+    const socket = io("https://13.229.79.196/", { secure: true });
     socket.on("updatelocation", (msg) => {
       console.log(msg);
     });

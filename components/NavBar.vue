@@ -105,6 +105,16 @@ function closeNav() {
 </script>
 
 <style scoped>
+.navbar-top {
+  background: #041322;
+  color: white !important;
+}
+
+h1,
+i {
+  color: white !important;
+}
+
 .sidebar {
   height: 100%;
   width: 0;
@@ -113,8 +123,9 @@ function closeNav() {
   top: 0;
   left: 0;
   /* background-color: #111; */
-  background-color: rgba(255, 255, 255, 0.8);
-
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  background: #041322;
+  color: white;
   opacity: 0.8;
   overflow-x: hidden;
   transition: 0.5s;
@@ -129,7 +140,8 @@ function closeNav() {
   /* color: #d3d0d0; */
   display: block;
   transition: 0.3s;
-  color: rgba(0, 0, 0, 0.8);
+  /* color: rgba(0, 0, 0, 0.8); */
+  color: white;
 }
 
 .sidebar a:hover {

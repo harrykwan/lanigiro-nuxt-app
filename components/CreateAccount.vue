@@ -93,3 +93,10 @@ function signup() {
     });
 }
 </script>
+<style scoped>
+.pages {
+  background: #061e36;
+  color: #fff;
+  background-image: linear-gradient(to bottom right, #0b2d50, #061e36, #041322);
+}
+</style>
