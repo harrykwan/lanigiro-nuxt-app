@@ -32,6 +32,7 @@
                 style="
                   width: 35vw;
                   height: 35vw;
+                  max-width: 100%;
                   object-fit: cover;
                   border: 0px solid black;
                   border-radius: 10px;
