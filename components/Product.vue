@@ -4,7 +4,7 @@
     <div class="container">
       <div class="section-head" style="padding-bottom: 30px">
         <h4>
-          <div class="lds-ripple">
+          <div v-if="nftdata.length == 0" class="lds-ripple">
             <div></div>
             <div></div>
           </div>
