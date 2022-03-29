@@ -67,7 +67,7 @@
 .nftitem {
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   padding: 15px;
-  background: #0b2d50;
+  background: #0e3b68;
   border: 0px solid black;
   border-radius: 15px;
 }
