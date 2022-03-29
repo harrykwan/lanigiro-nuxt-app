@@ -3,7 +3,12 @@
   <div class="section product" style="height: 100%">
     <div class="container">
       <div class="section-head" style="padding-bottom: 30px">
-        <h4>Your NFTs</h4>
+        <h4>
+          <div class="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+        </h4>
         <p></p>
       </div>
 
@@ -70,6 +75,39 @@
   background: #0e3b68;
   border: 0px solid black;
   border-radius: 15px;
+}
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid #fff;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
 }
 </style>
 
