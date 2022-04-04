@@ -165,7 +165,7 @@ function geodistance(lon1, lat1, lon2, lat2) {
 async function startpage() {
   console.log(nowuser.value);
   if (nowuser.value) {
-    const socket = io("https://13.229.79.196/", { secure: true });
+    const socket = io("https://socketio.lanigiro.io/", { secure: true });
     socket.on("updatelocation", (msg) => {
       console.log(msg);
     });

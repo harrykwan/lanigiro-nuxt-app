@@ -26,7 +26,9 @@
               />
             </div>
 
-            <NuxtLink to="/createaccount"><h6>Create new Account</h6></NuxtLink>
+            <NuxtLink to="/createaccount"
+              ><h6 class="mt-3">Create new Account</h6></NuxtLink
+            >
             <a href="#" class="button-default" v-on:click="login()">Login</a>
           </form>
         </div>

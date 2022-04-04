@@ -87,6 +87,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 const nowuser = useFirebaseAuth();
+const router = useRouter();
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -96,10 +97,13 @@ onAuthStateChanged(auth, (user) => {
 
     // ...
     console.log(uid);
+
+    router.push("/");
   } else {
     // User is signed out
     // ...
     console.log("logout");
+    router.push("/login");
   }
   nowuser.value = user;
 });
@@ -129,6 +133,7 @@ input {
     #39bfef
   ) !important;
   padding: 5px 18px;
+  margin-left: 5px;
   border: 0px solid black;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   border-radius: 10px;
