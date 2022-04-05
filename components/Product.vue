@@ -114,8 +114,19 @@
 </style>
 
 <script setup>
+import {
+  doc,
+  updateDoc,
+  setDoc,
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import axios from "axios";
 const nowuser = useFirebaseAuth();
+const firestoredb = getFirestore();
 const nftdata = ref([]);
 const walletid = useWallet();
 const geodata = ref({});
@@ -126,6 +137,11 @@ watch(nowuser, async () => {
 
 onMounted(async () => {
   await startpage();
+  // const socket = io("https://socketio.lanigiro.io/", { secure: true });
+  // socket.on("updatelocation", (msg) => {
+  //   console.log(msg);
+  // });
+  // await sendgeodata(socket, walletid.value, geodata.value);
 });
 
 async function getgeodata() {
@@ -162,22 +178,50 @@ function geodistance(lon1, lat1, lon2, lat2) {
   return d;
 }
 
-async function startpage() {
-  console.log(nowuser.value);
-  if (nowuser.value) {
-    const socket = io("https://socketio.lanigiro.io/", { secure: true });
-    socket.on("updatelocation", (msg) => {
-      console.log(msg);
-    });
-    const linkedwalletid = await getwalletid();
-    walletid.value = linkedwalletid;
-    await getnftdata(linkedwalletid);
+async function updatelocation() {
+  try {
     const mygeodata = await getgeodata();
     geodata.value = {
       lat: mygeodata.latitude,
       long: mygeodata.longitude,
     };
-    await sendgeodata(socket, walletid.value, geodata.value);
+    console.log(geodata.value);
+
+    await setDoc(doc(firestoredb, "locationdata", nowuser.value.uid), {
+      geodata: geodata.value,
+      updatetime: Date.now(),
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function querynearby() {
+  const locationdatasRef = collection(firestoredb, "locationdata");
+  const q = query(
+    locationdatasRef,
+    where("updatetime", ">=", Date.now() - 300000)
+  );
+  const querySnapshot = await getDocs(q);
+  let allresult = [];
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    if (doc.id != nowuser.value.uid)
+      allresult.push({ ...doc.data(), id: doc.id });
+  });
+  return allresult;
+}
+
+async function startpage() {
+  console.log(nowuser.value);
+  if (nowuser.value) {
+    const linkedwalletid = await getwalletid();
+    walletid.value = linkedwalletid;
+    await getnftdata(linkedwalletid);
+    await updatelocation();
+    const nearbyresult = await querynearby();
+    console.log(nearbyresult);
   }
 }
 

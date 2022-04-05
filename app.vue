@@ -67,6 +67,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+// import { getMessaging, getToken } from "firebase/messaging";
+import { getFirestore, doc, onSnapshot } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -83,11 +85,36 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
+const db = useFirebaseDb();
 const auth = getAuth();
-
+const firestoredb = getFirestore();
+// const messaging = getMessaging();
 const nowuser = useFirebaseAuth();
 const router = useRouter();
+
+onMounted(() => {
+  // getToken(messaging, {
+  //   vapidKey:
+  //     "BGGMWzuQvmKeloNj5SctsZUmp9LK_XXSvEFF-nLrat_TbZHakGbYFwxkJTdteMR6IQQflTKyHfeFwCi6SzwqaFE",
+  // })
+  //   .then((currentToken) => {
+  //     if (currentToken) {
+  //       // Send the token to your server and update the UI if necessary
+  //       // ...
+  //       console.log(currentToken);
+  //     } else {
+  //       // Show permission request UI
+  //       console.log(
+  //         "No registration token available. Request permission to generate one."
+  //       );
+  //       // ...
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log("An error occurred while retrieving token. ", err);
+  //     // ...
+  //   });
+});
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -97,13 +124,22 @@ onAuthStateChanged(auth, (user) => {
 
     // ...
     console.log(uid);
+    const unsub = onSnapshot(doc(firestoredb, "locationdata", uid), (doc) => {
+      console.log("Current data: ", doc.data());
+      // db.value = doc.data();
+    });
 
     router.push("/");
   } else {
     // User is signed out
     // ...
     console.log("logout");
-    router.push("/login");
+    if (
+      window.location.href.indexOf("login") == -1 &&
+      window.location.href.indexOf("metamaskmobile") == -1 &&
+      window.location.href.indexOf("createaccount") == -1
+    )
+      router.push("/login");
   }
   nowuser.value = user;
 });
