@@ -129,7 +129,7 @@ onAuthStateChanged(auth, (user) => {
       // db.value = doc.data();
     });
 
-    router.push("/");
+    // router.push("/");
   } else {
     // User is signed out
     // ...

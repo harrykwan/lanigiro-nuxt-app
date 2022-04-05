@@ -219,21 +219,21 @@ async function querynearby() {
 async function startpage() {
   console.log(nowuser.value);
   if (nowuser.value) {
-    const linkedwalletid = await getwalletid();
-    walletid.value = linkedwalletid;
-    await getnftdata(linkedwalletid);
     await updatelocation();
     const nearbyresult = await querynearby();
     console.log(nearbyresult);
+    for (var j = 0; j < nearbyresult.length; j++) {
+      const linkedwalletid = await getwalletid(nearbyresult[j].id);
+      await getnftdata(linkedwalletid);
+    }
   }
 }
 
-async function getwalletid() {
+async function getwalletid(uid) {
   return new Promise((resolve, reject) => {
     axios
       .get(
-        "https://wyqx4s5dw8.execute-api.us-east-1.amazonaws.com/users/" +
-          nowuser.value.uid //0x3E1D44802321cce6E9E7557730433c2ab5838760
+        "https://wyqx4s5dw8.execute-api.us-east-1.amazonaws.com/users/" + uid //0x3E1D44802321cce6E9E7557730433c2ab5838760
       )
       .then(function (response) {
         console.log(response.data.metamaskId);
