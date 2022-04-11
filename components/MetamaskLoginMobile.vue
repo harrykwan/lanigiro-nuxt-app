@@ -70,6 +70,14 @@ async function signinmetamask() {
   console.log(walletid.value);
 
   await savemetamask();
+
+  await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, 3000);
+  });
+
+  window.location.href = "unitydl://app.lanigiro.io";
 }
 
 async function savemetamask() {
