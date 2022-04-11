@@ -29,6 +29,10 @@
             </div>
             <div class="center" v-if="walletid">
               {{ walletid }}
+              <br />
+              <a href="unitydl://app.lanigiro.io" class="button-default"
+                >Back to Lanigiro
+              </a>
             </div>
           </div>
         </div>
