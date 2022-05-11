@@ -68,7 +68,7 @@
   background: #061e36;
   color: #fff;
   background-image: linear-gradient(to bottom right, #0b2d50, #061e36, #041322);
-  min-height: 50vh;
+  min-height: 94vh;
 }
 
 .nftitem {
@@ -199,32 +199,18 @@ async function updatelocation() {
   }
 }
 
-async function querynearby() {
-  const locationdatasRef = collection(firestoredb, "locationdata");
-  const q = query(
-    locationdatasRef,
-    where("updatetime", ">=", Date.now() - 300000)
-  );
-  const querySnapshot = await getDocs(q);
-  let allresult = [];
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-    if (doc.id != nowuser.value.uid)
-      allresult.push({ ...doc.data(), id: doc.id });
-  });
-  return allresult;
-}
-
 async function startpage() {
   console.log(nowuser.value);
   if (nowuser.value) {
     const linkedwalletid = await getwalletid();
+
     walletid.value = linkedwalletid;
-    await getnftdata(linkedwalletid);
+    const nftdata = await getnftdata(linkedwalletid);
+    await setDoc(doc(firestoredb, "nftcache", nowuser.value.uid), {
+      walletid: linkedwalletid,
+      nftdata: nftdata,
+    });
     await updatelocation();
-    const nearbyresult = await querynearby();
-    console.log(nearbyresult);
   }
 }
 
@@ -255,8 +241,9 @@ async function getnftdata(mywalletid) {
           mywalletid //0x3E1D44802321cce6E9E7557730433c2ab5838760
       )
       // .get(
-      //   "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/0x42c87fc41a23684fe07264b57a123f1954857cd2"
-      // )
+      //   "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/" +
+      //     mywalletid
+      // ) //0x42c87fc41a23684fe07264b57a123f1954857cd2
       .then(function (response) {
         // handle success
         // console.log(this.nftdata);

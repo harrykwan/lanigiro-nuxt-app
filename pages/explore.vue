@@ -3,6 +3,6 @@
     <NavBar />
     <Explore />
     <Footer />
+    <Botnav />
   </div>
 </template>
-<script setup></script>

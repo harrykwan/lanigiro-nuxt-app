@@ -124,7 +124,11 @@ onAuthStateChanged(auth, (user) => {
 
     // ...
     console.log(uid);
-    const unsub = onSnapshot(doc(firestoredb, "locationdata", uid), (doc) => {
+    onSnapshot(doc(firestoredb, "locationdata", uid), (doc) => {
+      console.log("Current data: ", doc.data());
+      // db.value = doc.data();
+    });
+    onSnapshot(doc(firestoredb, "nftcache", uid), (doc) => {
       console.log("Current data: ", doc.data());
       // db.value = doc.data();
     });

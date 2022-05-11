@@ -17,7 +17,7 @@
           <a href=""><i class="fa fa-linkedin"></i></a>
           <a href=""><i class="fa fa-instagram"></i></a>
         </div>
-        <div class="copyright">
+        <div class="copyright" hidden>
           <h6>Lanigiro</h6>
           <span>© 2022 All Right Reserved</span>
         </div>
