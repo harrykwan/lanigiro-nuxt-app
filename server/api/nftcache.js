@@ -21,7 +21,10 @@ export default async (req, res) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    const data = docSnap.data();
+    let data = docSnap.data();
+    data = data.nftdata.map((x) => {
+      return { IconUrl: x.image, Name: x.name };
+    });
     console.log("Document data:");
     return data;
   }
