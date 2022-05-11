@@ -68,7 +68,7 @@
   background: #061e36;
   color: #fff;
   background-image: linear-gradient(to bottom right, #0b2d50, #061e36, #041322);
-  min-height: 94vh;
+  min-height: 90vh;
 }
 
 .nftitem {
