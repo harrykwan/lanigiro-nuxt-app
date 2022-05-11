@@ -1,8 +1,8 @@
 <template>
   <div>
     <NavBar />
+    <Botnav />
     <Explore />
     <Footer />
-    <Botnav />
   </div>
 </template>

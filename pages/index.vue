@@ -1,9 +1,9 @@
 <template>
   <div>
     <NavBar />
+    <Botnav />
     <Product />
     <Footer />
-    <Botnav />
   </div>
 </template>
 <script setup></script>
