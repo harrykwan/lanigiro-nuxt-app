@@ -1,10 +1,14 @@
 <template>
   <div class="botnav">
-    <a href="uniwebview://openar"
+    <a :href="'uniwebview://openar?userid=' + nowuser.uid"
       ><img src="~/assets/boticon.png" style="width: 80px" class="boticon"
     /></a>
   </div>
 </template>
+
+<script setup>
+const nowuser = useFirebaseAuth();
+</script>
 
 <style scoped>
 .boticon {
