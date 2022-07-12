@@ -13,7 +13,7 @@
             </div>
             <div class="row pl-5 pr-5 mt-5">
               <div class="col-6 text-muted">YOUR INTEREST</div>
-              <div class="col-6 text-muted">YOUR INVESTMENT</div>
+              <div class="col-6 text-muted">YOUR WALLET</div>
               <div class="col-6"><span class="coinct">0</span> LANI</div>
               <div class="col-6"><span class="coinct">0</span> LNAI</div>
             </div>

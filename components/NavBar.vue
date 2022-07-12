@@ -43,7 +43,7 @@
       <NuxtLink v-if="nowuser" to="/metamask"
         ><a href="#">MetaMask</a></NuxtLink
       >
-
+      <NuxtLink v-if="nowuser" to="/earn"><a href="#">Earn</a></NuxtLink>
       <NuxtLink v-if="!nowuser" to="/login"><a href="#">Login</a></NuxtLink>
       <NuxtLink v-if="!nowuser" to="/createaccount"
         ><a href="#">Sign Up</a></NuxtLink
