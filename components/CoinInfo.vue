@@ -2,7 +2,7 @@
   <div class="pages section">
     <div class="container">
       <div class="pages-head">
-        <h3>LANI EARN</h3>
+        <h3>GIRO EARN</h3>
       </div>
       <div class="login">
         <div class="row">
@@ -14,8 +14,8 @@
             <div class="row pl-5 pr-5 mt-5">
               <div class="col-6 text-muted">YOUR INTEREST</div>
               <div class="col-6 text-muted">YOUR WALLET</div>
-              <div class="col-6"><span class="coinct">0</span> LANI</div>
-              <div class="col-6"><span class="coinct">0</span> LNAI</div>
+              <div class="col-6"><span class="coinct">0</span> GIRO</div>
+              <div class="col-6"><span class="coinct">0</span> GIRO</div>
             </div>
             <div class="center">
               <a href="#" class="button-default">Buy more</a>
