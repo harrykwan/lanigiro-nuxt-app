@@ -24,5 +24,6 @@ const nowuser = useFirebaseAuth();
 
 .botnav {
   position: fixed;
+  z-index: 99;
 }
 </style>
