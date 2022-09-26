@@ -189,11 +189,11 @@ async function updatelocation() {
       long: mygeodata.longitude,
     };
     console.log(geodata.value);
-
-    await setDoc(doc(firestoredb, "locationdata", nowuser.value.uid), {
-      geodata: geodata.value,
-      updatetime: Date.now(),
-    });
+    if (geodata.value)
+      await setDoc(doc(firestoredb, "locationdata", nowuser.value.uid), {
+        geodata: geodata.value,
+        updatetime: Date.now(),
+      });
   } catch (e) {
     console.log(e);
   }
@@ -206,10 +206,11 @@ async function startpage() {
 
     walletid.value = linkedwalletid;
     const nftdata = await getnftdata(linkedwalletid);
-    await setDoc(doc(firestoredb, "nftcache", nowuser.value.uid), {
-      walletid: linkedwalletid,
-      nftdata: nftdata,
-    });
+    if (nftdata && linkedwalletid && nowuser.value.uid)
+      await setDoc(doc(firestoredb, "nftcache", nowuser.value.uid), {
+        walletid: linkedwalletid,
+        nftdata: nftdata,
+      });
     await updatelocation();
   }
 }
@@ -244,6 +245,10 @@ async function getnftdata(mywalletid) {
       //   "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/" +
       //     mywalletid
       // ) //0x42c87fc41a23684fe07264b57a123f1954857cd2
+      // .get(
+      //   "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/" +
+      //     "0x42c87fc41a23684fe07264b57a123f1954857cd2"
+      // )
       .then(function (response) {
         // handle success
         // console.log(this.nftdata);
