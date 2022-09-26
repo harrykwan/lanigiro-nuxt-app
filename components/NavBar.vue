@@ -39,7 +39,7 @@
 
       <NuxtLink v-if="nowuser" to="/"><a href="/">Home</a></NuxtLink>
       <NuxtLink v-if="nowuser" to="/explore"><a href="/">Explore</a></NuxtLink>
-
+      <NuxtLink v-if="nowuser" to="/profile"><a href="/">Profile</a></NuxtLink>
       <NuxtLink v-if="nowuser" to="/metamask"
         ><a href="#">MetaMask</a></NuxtLink
       >
