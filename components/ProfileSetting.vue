@@ -128,14 +128,14 @@ async function getnftdata(mywalletid) {
       //   "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/gettestnetnfts/" +
       //     mywalletid //0x3E1D44802321cce6E9E7557730433c2ab5838760
       // )
-      // .get(
-      //   "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/" +
-      //     mywalletid
-      // ) //0x42c87fc41a23684fe07264b57a123f1954857cd2
       .get(
         "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/" +
-          "0x42c87fc41a23684fe07264b57a123f1954857cd2"
-      )
+          mywalletid
+      ) //0x42c87fc41a23684fe07264b57a123f1954857cd2
+      //   .get(
+      //     "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/" +
+      //       "0x42c87fc41a23684fe07264b57a123f1954857cd2"
+      //   )
       .then(function (response) {
         // handle success
         // console.log(this.nftdata);
