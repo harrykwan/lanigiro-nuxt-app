@@ -20,40 +20,85 @@
 
       <div class="row" style="padding-bottom: 50px">
         <div
-          class="col-6"
+          class="col-12"
           style="padding-bottom: 50px"
           v-for="n in nftdata.length"
           :key="n"
         >
-          <div class="content nftitem">
+          <div style="margin-bottom: 15px">
+            <img
+              style="
+                width: 25px;
+                height: 25px;
+                object-fit: cover;
+                border-radius: 50%;
+                margin-right: 10px;
+              "
+              :src="
+                nftdata[n - 1]
+                  ? nftdata[n - 1].propicurl
+                    ? nftdata[n - 1].propicurl
+                    : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                  : ''
+              "
+            />
+            <a>{{
+              nftdata[n - 1]
+                ? nftdata[n - 1].username
+                  ? nftdata[n - 1].username
+                  : "unkown_user"
+                : ""
+            }}</a>
+          </div>
+          <div class="content nftitem" style="text-align: left">
             <!-- {{ n }}: {{ nftdata[n - 1] }} -->
             <div>
               <img
-                style="
-                  width: 35vw;
-                  height: 35vw;
-                  max-width: 100%;
-                  object-fit: cover;
-                  border: 0px solid black;
-                  border-radius: 10px;
-                "
+                style="border: 0px solid black; border-radius: 5px"
                 v-on:click="gotoapp(nftdata[n - 1])"
                 :src="nftdata[n - 1] ? nftdata[n - 1].image : ''"
                 alt=""
               />
             </div>
-            <h5 style="opacity: 0.8; margin-top: 15px">
-              <a class="text-light" href="">{{
-                nftdata[n - 1] ? nftdata[n - 1].name : ""
-              }}</a>
-            </h5>
-            <!-- <div class="star">
-              <span class="active"><i class="fa fa-star"></i></span>
-              <span class="active"><i class="fa fa-star"></i></span>
-              <span class="active"><i class="fa fa-star"></i></span>
-              <span class="active"><i class="fa fa-star"></i></span>
-              <span class="active"><i class="fa fa-star"></i></span>
-            </div> -->
+            <div class="star" style="margin-top: 15px; margin-left: 10px">
+              <span class="active"><i class="fa fa-thumbs-up"></i></span>
+              <span class="" style="margin-left: 7px"
+                ><i class="fa fa-comment"></i
+              ></span>
+            </div>
+            <div style="opacity: 0.9; margin-top: 10px; margin-left: 10px">
+              <a class="text-light" href="">
+                <b>
+                  {{
+                    nftdata[n - 1]
+                      ? nftdata[n - 1].username
+                        ? nftdata[n - 1].username
+                        : "unkown_user"
+                      : ""
+                  }}
+                </b>
+              </a>
+              <a
+                class="text-light"
+                href=""
+                style="margin-left: 10px; opacity: 0.7"
+                >{{ nftdata[n - 1] ? nftdata[n - 1].name : "" }}</a
+              >
+            </div>
+            <div
+              style="
+                opacity: 0.6;
+                margin-top: 15px;
+                margin-left: 10px;
+                border-left: 1px solid grey;
+                padding-left: 10px;
+              "
+            >
+              <pre class="text-light" style="max-height: 15vh">{{
+                nftdata[n - 1] ? nftdata[n - 1].description : ""
+              }}</pre>
+            </div>
+
             <!-- <h6 class="price">$40</h6> -->
           </div>
         </div>
@@ -72,11 +117,11 @@
 }
 
 .nftitem {
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  /* box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   padding: 15px;
   background: #0e3b68;
   border: 0px solid black;
-  border-radius: 15px;
+  border-radius: 15px; */
 }
 
 .lds-ripple {
@@ -203,7 +248,7 @@ async function querynearby() {
   const locationdatasRef = collection(firestoredb, "locationdata");
   const q = query(
     locationdatasRef,
-    where("updatetime", ">=", Date.now() - 300000)
+    where("updatetime", ">=", 0) // Date.now() - 300000)
   );
   const querySnapshot = await getDocs(q);
   let allresult = [];
@@ -263,16 +308,17 @@ async function getnftdata(mywalletid) {
         // console.log(this.nftdata);
         console.log(response.data);
         for (var j = 0; j < response.data.length; j++) {
-          if (response.data[j].image) {
-            response.data[j].image = response.data[j].image
-              .split("gateway.pinata.cloud")
-              .join("ipfs.io")
-              .split("ipfs://")
-              .join("https://ipfs.io/ipfs/")
-              .split("rebelkidscats.mypinata.cloud")
-              .join("ipfs.io");
-            globalnftdata.push(response.data[j]);
-          }
+          if (response.data[j])
+            if (response.data[j].image) {
+              response.data[j].image = response.data[j].image
+                .split("gateway.pinata.cloud")
+                .join("ipfs.io")
+                .split("ipfs://")
+                .join("https://ipfs.io/ipfs/")
+                .split("rebelkidscats.mypinata.cloud")
+                .join("ipfs.io");
+              globalnftdata.push(response.data[j]);
+            }
         }
         console.log(globalnftdata);
         resolve(globalnftdata);

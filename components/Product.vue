@@ -1,5 +1,4 @@
 <template>
-  <!-- product -->
   <div class="section product" style="height: 100%">
     <div class="container">
       <div class="section-head" style="padding-bottom: 30px">
@@ -60,7 +59,6 @@
       </div>
     </div>
   </div>
-  <!-- end product -->
 </template>
 
 <style scoped>
@@ -136,7 +134,7 @@ watch(nowuser, async () => {
 });
 
 onMounted(async () => {
-  await startpage();
+  // await startpage();
   setInterval(async () => {
     await updatelocation();
   }, 30000);
@@ -206,12 +204,13 @@ async function startpage() {
 
     walletid.value = linkedwalletid;
     const nftdata = await getnftdata(linkedwalletid);
-    if (nftdata && linkedwalletid && nowuser.value.uid)
+    if (nftdata && linkedwalletid && nowuser.value.uid) {
       await setDoc(doc(firestoredb, "nftcache", nowuser.value.uid), {
         walletid: linkedwalletid,
         nftdata: nftdata,
       });
-    await updatelocation();
+      await updatelocation();
+    }
   }
 }
 
@@ -254,16 +253,17 @@ async function getnftdata(mywalletid) {
         // console.log(this.nftdata);
         console.log(response.data);
         for (var j = 0; j < response.data.length; j++) {
-          if (response.data[j].image) {
-            response.data[j].image = response.data[j].image
-              .split("gateway.pinata.cloud")
-              .join("ipfs.io")
-              .split("ipfs://")
-              .join("https://ipfs.io/ipfs/")
-              .split("rebelkidscats.mypinata.cloud")
-              .join("ipfs.io");
-            globalnftdata.push(response.data[j]);
-          }
+          if (response.data[j])
+            if (response.data[j].image) {
+              response.data[j].image = response.data[j].image
+                .split("gateway.pinata.cloud")
+                .join("ipfs.io")
+                .split("ipfs://")
+                .join("https://ipfs.io/ipfs/")
+                .split("rebelkidscats.mypinata.cloud")
+                .join("ipfs.io");
+              globalnftdata.push(response.data[j]);
+            }
         }
         console.log(globalnftdata);
         resolve(globalnftdata);

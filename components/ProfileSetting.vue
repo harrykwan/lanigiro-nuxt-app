@@ -7,8 +7,8 @@
           <div class="col s12" style="">
             <div class="center">
               <img
-                style="width: 40%"
-                src="https://picsum.photos/id/237/200/200"
+                style="width: 40%; height: 36vw; object-fit: cover"
+                :src="propicurl"
               />
               <!-- <ThreejsLogo /> -->
             </div>
@@ -44,6 +44,7 @@
                   style="height: 100px"
                 >
                   <img
+                    @click="setpropic(nft.image)"
                     style="width: 100%; height: 80px; object-fit: cover"
                     :src="nft.image"
                   />
@@ -75,6 +76,10 @@ const firestoredb = getFirestore();
 const walletid = useWallet();
 const mynftdata = ref([]);
 
+const propicurl = ref(
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+);
+
 watch(nowuser, async () => {
   await startpage();
 });
@@ -98,8 +103,26 @@ async function startpage() {
         walletid: linkedwalletid,
         nftdata: nftdata,
       });
+    await getprofiledata();
   }
   //   }
+}
+
+async function getprofiledata() {
+  const docRef = doc(firestoredb, "profile", walletid.value);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    let data = docSnap.data();
+    if (data.propicurl) propicurl.value = data.propicurl;
+  }
+}
+
+async function setpropic(url) {
+  console.log(url);
+  propicurl.value = url;
+  await setDoc(doc(firestoredb, "profile", walletid.value), {
+    propicurl: url,
+  });
 }
 
 async function getwalletid() {
@@ -130,6 +153,7 @@ async function getnftdata(mywalletid) {
       // )
       .get(
         "https://1tftnvgsji.execute-api.us-east-1.amazonaws.com/getnfts/" +
+          // "0x902f27c12B8e793FE49AAB11D4A0114F83fff44D"
           mywalletid
       ) //0x42c87fc41a23684fe07264b57a123f1954857cd2
       //   .get(
